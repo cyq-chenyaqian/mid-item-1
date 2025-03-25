@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航栏与内容页面</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        /* 左侧导航栏样式 */
+        .sidebar {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s ease; /* 添加颜色过渡效果 */
+        }
+
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            color: #007bff; /* 鼠标悬停或激活时的颜色 */
+        }
+
+        .sidebar ul li ul {
+            margin-left: 20px;
+        }
+
+        .sidebar ul li ul li a {
+            font-weight: normal;
+            transition: color 0.3s ease; /* 添加颜色过渡效果 */
+        }
+
+        .sidebar ul li ul li a:hover, .sidebar ul li ul li a.active {
+            color: #0056b3; /* 鼠标悬停或激活时的颜色 */
+        }
+
+        /* 右侧内容区域样式 */
+        .content {
+            flex: 1;
+            padding: 20px;
+            position: relative;
+        }
+
+        .content > div:not(.active) {
+            display: none;
+        }
+
+        /* 文字剧中样式 */
+        .centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100vh;
+        }
+
+        /* 右下角按钮样式 */
+        .next-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000; /* 确保按钮保持在顶部 */
+        }
+
+        .next-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 左侧导航栏 -->
+    <div class="sidebar" id="sidebar">
+        <h2>导航栏</h2>
+        <ul>
+            <li><a href="#" onclick="activateSection('#section1')">部分 1</a>
+                <ul>
+                    <li><a href="#" onclick="activateSection('#section1-1')">小节 1.1</a></li>
+                    <li><a href="#" onclick="activateSection('#section1-2')">小节 1.2</a></li>
+                </ul>
+            </li>
+            <li><a href="#" onclick="activateSection('#section2')">部分 2</a>
+                <ul>
+                    <li><a href="#" onclick="activateSection('#section2-1')">小节 2.1</a></li>
+                    <li><a href="#" onclick="activateSection('#section2-2')">小节 2.2</a></li>
+                </ul>
+            </li>
+            <li><a href="#" onclick="activateSection('#section3')">部分 3</a>
+                <ul>
+                    <li><a href="#" onclick="activateSection('#section3-1')">小节 3.1</a></li>
+                    <li><a href="#" onclick="activateSection('#section3-2')">小节 3.2</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 右侧内容区域 -->
+    <div class="content" id="content">
+        <!-- 初始标题页 -->
+        <div id="title-page" class="active centered">
+            <h1>欢迎来到导航栏与内容页面</h1>
+            <p>点击“下一小节”开始学习。</p>
+        </div>
+
+        <div id="section1">
+            <h1>部分 1</h1>
+            <p>这是部分 1 的内容。</p>
+        </div>
+        <div id="section1-1">
+            <h2>小节 1.1</h2>
+            <p>这是小节 1.1 的内容。</p>
+        </div>
+        <div id="section1-2">
+            <h2>小节 1.2</h2>
+            <p>这是小节 1.2 的内容。</p>
+        </div>
+        <div id="section2">
+            <h1>部分 2</h1>
+            <p>这是部分 2 的内容。</p>
+        </div>
+        <div id="section2-1">
+            <h2>小节 2.1</h2>
+            <p>这是小节 2.1 的内容。</p>
+        </div>
+        <div id="section2-2">
+            <h2>小节 2.2</h2>
+            <p>这是小节 2.2 的内容。</p>
+        </div>
+        <div id="section3">
+            <h1>部分 3</h1>
+            <p>这是部分 3 的内容。</p>
+        </div>
+        <div id="section3-1">
+            <h2>小节 3.1</h2>
+            <p>这是小节 3.1 的内容。</p>
+        </div>
+        <div id="section3-2">
+            <h2>小节 3.2</h2>
+            <p>这是小节 3.2 的内容。</p>
+        </div>
+
+        <!-- 结束页面 -->
+        <div id="end-page" class="centered">
+            <h1>学习结束</h1>
+            <p>恭喜您完成了所有内容的学习！</p>
+        </div>
+    </div>
+
+    <!-- 右下角按钮 -->
+    <button class="next-button" onclick="nextSection()">下一小节</button>
+
+    <script>
+        // 定义小节顺序
+        const sections = [
+            "#title-page", // 初始标题页
+            "#section1", "#section1-1", "#section1-2",
+            "#section2", "#section2-1", "#section2-2",
+            "#section3", "#section3-1", "#section3-2",
+            "#end-page" // 结束页面
+        ];
+
+        let currentSectionIndex = 0;
+
+        function activateSection(id) {
+            // 移除当前激活项的激活状态
+            document.querySelector('.active').classList.remove('active');
+            // 设置新激活项的激活状态
+            document.querySelector(id).classList.add('active');
+            // 更新当前索引
+            currentSectionIndex = sections.indexOf(id);
+            // 移动到新的内容区域
+            document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+            // 更新按钮文本
+            updateButton();
+            // 根据当前页面调整导航栏显示
+            adjustSidebar();
+        }
+
+        // 跳转到下一小节的函数
+        function nextSection() {
+            if (currentSectionIndex < sections.length - 1) {
+                // 移除当前激活项的激活状态
+                document.querySelector('.active').classList.remove('active');
+                currentSectionIndex++;
+                const nextSectionId = sections[currentSectionIndex];
+                document.querySelector(nextSectionId).classList.add('active'); // 添加激活状态
+                document.querySelector(nextSectionId).scrollIntoView({ behavior: 'smooth' });
+                updateButton();
+                // 根据当前页面调整导航栏显示
+                adjustSidebar();
+            } else {
+                alert("已经是最后一节了！");
+            }
+        }
+
+        // 更新按钮显示逻辑
+        function updateButton() {
+            const button = document.querySelector('.next-button');
+            if (currentSectionIndex === sections.length - 1) { // 如果是结束页面，隐藏按钮
+                button.style.display = 'none';
+            } else { // 否则显示按钮
+                button.style.display = 'block';
+            }
+        }
+
+        // 根据当前页面调整导航栏显示
+        function adjustSidebar() {
+            if (currentSectionIndex === 0 || currentSectionIndex === sections.length - 1) {
+                document.getElementById('sidebar').style.display = 'none';
+            } else {
+                document.getElementById('sidebar').style.display = 'block';
+            }
+        }
+
+        // 初始状态更新按钮和导航栏
+        updateButton();
+        adjustSidebar();
+    </script>
+</body>
+</html>
